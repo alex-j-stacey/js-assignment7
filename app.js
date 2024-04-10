@@ -17,14 +17,23 @@ app.get('/', (_, response) => {
 	response.sendFile('index.html', { root })
 })
 
-
-
 // GET /api/todos
+app.get('/api/todos', (_, response) => {
+	response.json(todos)
+} )
 
 // POST /api/todos
+app.post('/api/todos', (request, response) => {
+	const {item} = request.body
+	todos.push({id: todos.length, item})
+})
 
 // PUT /api/todos/:id
-
+app.put('/api/todos/:id', (request, response) => {
+	const { id } = request.params
+	const task = todos.find(todo => todo.id.toString() === id)
+	task.complete = !task.complete // toggle the complete property
+})
 
 
 const message = `Server running: http://localhost:${port}`
